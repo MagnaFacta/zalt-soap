@@ -25,6 +25,13 @@ use Zalt\Model\Data\DataReaderInterface;
 class SoapDataReader implements DataReaderInterface
 {
     /**
+     * The name of the data source used for this reader
+     *
+     * @var string
+     */
+    protected $_dataSoureName;
+
+    /**
      *
      * @var SoapConnector
      */
@@ -35,9 +42,10 @@ class SoapDataReader implements DataReaderInterface
      *
      * @param SoapBridge $soapBridge
      */
-    public function __construct(SoapConnector $soapConnector)
+    public function __construct(SoapConnector $soapConnector, $dataSoureName)
     {
         $this->_soapConnector = $soapConnector;
+        $this->_dataSoureName = $dataSoureName;
     }
 
     /**
@@ -47,9 +55,9 @@ class SoapDataReader implements DataReaderInterface
      * @param mixed $sort Array to use for sort
      * @return array Nested array or false
      */
-    public function load($filter = true, $sort = true)
+    public function load($filter = null, $sort = null)
     {
-
+        return $this->_soapConnector->queryAll($this->_dataSoureName, $filter, $sort);
     }
 
     /**
@@ -59,8 +67,8 @@ class SoapDataReader implements DataReaderInterface
      * @param mixed $sort Array to use for sort
      * @return array An array or false
      */
-    public function loadFirst($filter = true, $sort = true)
+    public function loadFirst($filter = null, $sort = null)
     {
-
+        return $this->_soapConnector->queryOne($this->_dataSoureName, $filter, $sort);
     }
 }

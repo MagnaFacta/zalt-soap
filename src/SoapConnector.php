@@ -21,5 +21,18 @@ namespace Zalt\Soap;
  */
 class SoapConnector
 {
+    public function __construct()
+    {
 
+    }
+
+    public function queryAll($source, $filter = [])
+    {
+
+    }
+
+    public function queryOne($source, $filter = [])
+    {
+
+    }
 }
