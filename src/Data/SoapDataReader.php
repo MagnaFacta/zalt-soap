@@ -11,6 +11,9 @@
 
 namespace Zalt\Soap\Data;
 
+use Zalt\Late\RepeatableInterface;
+use Zalt\Model\Data\DataReaderTrait;
+use Zalt\Model\MetaModelInterface;
 use Zalt\Soap\SoapConnector;
 use Zalt\Model\Data\DataReaderInterface;
 
@@ -24,30 +27,30 @@ use Zalt\Model\Data\DataReaderInterface;
  */
 class SoapDataReader implements DataReaderInterface
 {
-    /**
-     * The name of the data source used for this reader
-     *
-     * @var string
-     */
-    protected $_dataSoureName;
-
-    /**
-     *
-     * @var SoapConnector
-     */
-    protected $_soapConnector;
-
+    use DataReaderTrait;
 
     /**
      *
      * @param SoapBridge $soapBridge
      */
-    public function __construct(SoapConnector $soapConnector, $dataSoureName)
+    public function __construct(
+        protected MetaModelInterface $metaModel, 
+        protected SoapConnector $soapConnector, 
+        protected string $dataSoureName)
     {
-        $this->_soapConnector = $soapConnector;
-        $this->_dataSoureName = $dataSoureName;
+        $this->dataSoureName = $dataSoureName;
     }
 
+    public function hasNew(): bool
+    {
+        return false;
+    }
+
+    public function getName(): string
+    {
+        return $this->dataSoureName;
+    }
+    
     /**
      * Returns a nested array containing the items requested.
      *
@@ -57,7 +60,7 @@ class SoapDataReader implements DataReaderInterface
      */
     public function load($filter = null, $sort = null)
     {
-        return $this->_soapConnector->queryAll($this->_dataSoureName, $filter, $sort);
+        return $this->soapConnector->queryAll($this->dataSoureName, $filter, $sort);
     }
 
     /**
@@ -69,6 +72,6 @@ class SoapDataReader implements DataReaderInterface
      */
     public function loadFirst($filter = null, $sort = null)
     {
-        return $this->_soapConnector->queryOne($this->_dataSoureName, $filter, $sort);
+        return $this->soapConnector->queryOne($this->dataSoureName, $filter, $sort);
     }
 }
