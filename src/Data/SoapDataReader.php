@@ -30,8 +30,9 @@ class SoapDataReader implements DataReaderInterface
     use DataReaderTrait;
 
     /**
-     *
-     * @param SoapBridge $soapBridge
+     * @param MetaModelInterface $metaModel
+     * @param SoapConnector $soapConnector
+     * @param string $dataSoureName
      */
     public function __construct(
         protected MetaModelInterface $metaModel, 
@@ -50,28 +51,27 @@ class SoapDataReader implements DataReaderInterface
     {
         return $this->dataSoureName;
     }
-    
-    /**
-     * Returns a nested array containing the items requested.
-     *
-     * @param mixed $filter Array to use as filter
-     * @param mixed $sort Array to use for sort
-     * @return array Nested array or false
-     */
-    public function load($filter = null, $sort = null)
+
+    public function load($filter = null, $sort = null, $columns = null): array
     {
         return $this->soapConnector->queryAll($this->dataSoureName, $filter, $sort);
     }
 
-    /**
-     * Returns an array containing the first requested item.
-     *
-     * @param mixed $filter Array to use as filter
-     * @param mixed $sort Array to use for sort
-     * @return array An array or false
-     */
-    public function loadFirst($filter = null, $sort = null)
+    public function loadCount($filter = null, $sort = null): int
+    {
+        return count($this->load($filter, $sort, null));
+    }
+
+    public function loadFirst($filter = null, $sort = null, $columns = null): array
     {
         return $this->soapConnector->queryOne($this->dataSoureName, $filter, $sort);
+    }
+
+    public function loadPageWithCount(?int &$total, int $page, int $items, $filter = null, $sort = null, $columns = null): array
+    {
+        $output = $this->load($filter, $sort, null);
+        $total  = count($output);
+
+        return array_slice($output, ($page - 1) * $items, $items);
     }
 }
