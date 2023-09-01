@@ -11,7 +11,6 @@
 
 namespace Zalt\Soap\Data;
 
-use Zalt\Late\RepeatableInterface;
 use Zalt\Model\Data\DataReaderTrait;
 use Zalt\Model\MetaModelInterface;
 use Zalt\Soap\SoapConnector;

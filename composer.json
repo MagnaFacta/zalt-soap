@@ -5,7 +5,8 @@
     "require": {
         "php": ">=5.6.0",
         "magnafacta/zalt-model": "2.x-dev",
-        "laminas/laminas-soap": "^2.13"
+        "laminas/laminas-soap": "^2.13",
+        "laminas/laminas-servicemanager": "^3.22.0"
     },
     "require-dev": {
         "phpstan/phpstan": "1.*",
@@ -25,6 +26,11 @@
     "autoload": {
         "psr-4": {
             "Zalt\\Soap\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Zalt\\Soap\\": "test\\"
         }
     },
     "repositories": [
