@@ -46,7 +46,7 @@ class SoapConnector
     /**
      *
      * @param string $sourceName
-     * @param callable $callable
+     * @param mixed $callable
      * @return $this
      * @throws SoapConfigurationException
      */

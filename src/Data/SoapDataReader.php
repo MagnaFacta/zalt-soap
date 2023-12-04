@@ -66,6 +66,12 @@ class SoapDataReader implements DataReaderInterface
         return $this->soapConnector->queryOne($this->dataSoureName, $filter, $sort);
     }
 
+    public function loadPage(int $page, int $items, $filter = null, $sort = null, $columns = null): array
+    {
+        $output = $this->load($filter, $sort, null);
+        return array_slice($output, ($page - 1) * $items, $items);
+    }
+
     public function loadPageWithCount(?int &$total, int $page, int $items, $filter = null, $sort = null, $columns = null): array
     {
         $output = $this->load($filter, $sort, null);
