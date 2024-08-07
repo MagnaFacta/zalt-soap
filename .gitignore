@@ -1,6 +1,5 @@
 composer.phar
 /vendor/
-/composer.lock
 /.idea
 /test/.phpunit.result.cache
 .phpunit.cache
