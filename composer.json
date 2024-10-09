@@ -4,7 +4,7 @@
     "type": "library",
     "require": {
         "php": ">=5.6.0",
-        "magnafacta/zalt-model": "^1.0.0",
+        "magnafacta/zalt-model": "^2.0.0",
         "laminas/laminas-soap": "^2.13",
         "laminas/laminas-servicemanager": "^3.22.0"
     },
